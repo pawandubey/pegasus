@@ -1,0 +1,9 @@
+name: pegasus
+version: 0.1.0
+
+authors:
+  - Pawan Dubey <git@pawandubey.com>
+
+crystal: 0.23.1
+
+license: MIT
