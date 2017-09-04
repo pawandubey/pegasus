@@ -7,8 +7,6 @@ module Pegasus
     end
   end
 
-  private
-
   macro define_method(name, &block)
     def {{name}}
       {{block.body}}

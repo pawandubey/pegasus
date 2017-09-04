@@ -1,3 +1,5 @@
+require "./rule.cr"
+
 module Pegasus
   class Sequence < Rule
     def initialize(head : Rule, *tail)

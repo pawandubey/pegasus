@@ -1,3 +1,5 @@
+require "./base.cr"
+
 module Pegasus
   module Atoms
     class String < Base

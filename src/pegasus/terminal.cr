@@ -1,4 +1,5 @@
-require './atoms/*'
+require "./atoms/*"
+require "./rule.cr"
 
 module Pegasus
   class Terminal < Rule

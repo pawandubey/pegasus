@@ -1,3 +1,5 @@
+require "./node.cr"
+
 module Pegasus
   class Rule < Node
     def >>(rule : Rule)
@@ -10,6 +12,9 @@ module Pegasus
 
     def ==(other)
       self.flatten == other.flatten
+    end
+
+    def match?
     end
   end
 end

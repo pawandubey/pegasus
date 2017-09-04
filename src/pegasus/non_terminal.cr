@@ -1,4 +1,4 @@
-require './atoms/*'
+require "./rule.cr"
 
 module Pegasus
   class NonTerminal < Rule

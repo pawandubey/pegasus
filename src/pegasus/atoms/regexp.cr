@@ -1,3 +1,5 @@
+require "./base.cr"
+
 module Pegasus
   module Atoms
     class Regexp < Base
@@ -7,7 +9,7 @@ module Pegasus
       end
 
       def match?(str : ::String)
-        @regex.match(str)
+        !!@regex.match(str)
       end
 
       def ==(other : self)
