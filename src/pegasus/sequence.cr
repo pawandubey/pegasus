@@ -3,7 +3,9 @@ require "./rule.cr"
 module Pegasus
   class Sequence < Rule
     def initialize(head : Rule, *tail)
-      @seq = [head] + tail.to_a
+      @seq = [] of Rule
+      @seq << head
+      @seq = @seq + tail.to_a
     end
 
     def match?(args)
@@ -11,7 +13,7 @@ module Pegasus
     end
 
     def flatten
-      [@seq]
+      @seq
     end
   end
 end

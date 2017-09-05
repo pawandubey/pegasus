@@ -10,8 +10,11 @@ module Pegasus
       NonTerminal.new(self, rule)
     end
 
-    def ==(other)
+    def ==(other : Rule)
       self.flatten == other.flatten
+    end
+
+    def flatten
     end
 
     def match?
