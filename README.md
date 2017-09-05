@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/pawandubey/pegasus.svg)](https://travis-ci.org/pawandubey/pegasus)
+
 # pegasus
 
 A PEG parser library for Crystal
