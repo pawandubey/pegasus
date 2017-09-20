@@ -1,5 +1,5 @@
 module Pegasus
-  alias MatchResultValue = ::String | Nil
+  alias MatchResultValue = ::String
 
   class MatchResult
     getter :value

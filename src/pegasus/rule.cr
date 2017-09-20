@@ -1,7 +1,8 @@
-require "./node.cr"
-
 module Pegasus
   class Rule < Node
+    include Pegasus::Ignorable
+    include Pegasus::Repeatable
+
     def >>(rule : Rule)
       Sequence.new(self, rule)
     end
@@ -17,7 +18,8 @@ module Pegasus
     def flatten
     end
 
-    def match?(context : Context)
+    def match?(context : Context) : MatchResult
+      MatchResult.failure("")
     end
   end
 end

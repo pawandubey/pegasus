@@ -1,6 +1,3 @@
-require "./atoms/*"
-require "./rule.cr"
-
 module Pegasus
   class Terminal < Rule
     def initialize(@atom : Atoms::Base)

@@ -1,5 +1,3 @@
-require "./rule.cr"
-
 module Pegasus
   class NonTerminal < Rule
     def initialize(rule : Rule)
@@ -15,9 +13,10 @@ module Pegasus
     def match?(context : Context)
       match = @children.find { |c| c.match?(context).success? }
       if match
+        match = match.match?(context)
         MatchResult.success(match.value)
       else
-        MatchResult.failure(match.value)
+        MatchResult.failure("")
       end
     end
 

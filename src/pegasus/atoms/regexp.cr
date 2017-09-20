@@ -1,11 +1,7 @@
-require "./base.cr"
-
 module Pegasus
   module Atoms
     class Regexp < Base
       getter :regex
-
-      @match_data : ::String | Nil
 
       def initialize(@regex : Regex)
       end
@@ -13,11 +9,11 @@ module Pegasus
       def match?(context : Context)
         res = @regex.match(context.rest)
         if res
-          @match_data = res.not_nil!.to_a.compact.join
-          context.consume(@match_data)
-          MatchResult.success(@match_data)
+          match_data = res.not_nil!.to_a.compact.join
+          context.consume(match_data)
+          MatchResult.success(match_data)
         else
-          MatchResult.failure(@match_data)
+          MatchResult.failure("")
         end
       end
 

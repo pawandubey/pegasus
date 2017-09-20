@@ -1,5 +1,3 @@
-require "./base.cr"
-
 module Pegasus
   module Atoms
     class String < Base
@@ -9,7 +7,7 @@ module Pegasus
       end
 
       def match?(context : Context)
-        if context.rest.starts_with?(@str)
+        if context.rest.size >= @str.size && context.rest.starts_with?(@str)
           context.consume(@str)
           MatchResult.success(@str)
         else
