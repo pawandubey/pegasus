@@ -8,8 +8,15 @@ module Pegasus
       @seq = @seq + tail.to_a
     end
 
-    def match?(args)
-      @seq.all? { |rule| rule.match?(args) }
+    def match?(context : Context)
+      match_data = @seq.reduce("") do |acc, rule|
+        match = rule.match?(context)
+        return MatchResult.failure(match.value) if match.failure?
+
+        acc + match.value
+      end
+
+      MatchResult.success(match_data)
     end
 
     def flatten

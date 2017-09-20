@@ -12,8 +12,13 @@ module Pegasus
       @children << rule << alternative
     end
 
-    def match?(args)
-      @children.find { |c| c.match?(args) }
+    def match?(context : Context)
+      match = @children.find { |c| c.match?(context).success? }
+      if match
+        MatchResult.success(match.value)
+      else
+        MatchResult.failure(match.value)
+      end
     end
 
     def flatten

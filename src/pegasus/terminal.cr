@@ -6,8 +6,8 @@ module Pegasus
     def initialize(@atom : Atoms::Base)
     end
 
-    def match?(args)
-      @atom.match?(args)
+    def match?(context : Context)
+      @atom.match?(context)
     end
 
     def flatten

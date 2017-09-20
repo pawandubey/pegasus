@@ -5,11 +5,20 @@ module Pegasus
     class Regexp < Base
       getter :regex
 
+      @match_data : ::String | Nil
+
       def initialize(@regex : Regex)
       end
 
-      def match?(str : ::String)
-        !!@regex.match(str)
+      def match?(context : Context)
+        res = @regex.match(context.rest)
+        if res
+          @match_data = res.not_nil!.to_a.compact.join
+          context.consume(@match_data)
+          MatchResult.success(@match_data)
+        else
+          MatchResult.failure(@match_data)
+        end
       end
 
       def ==(other : self)

@@ -1,5 +1,5 @@
 module Pegasus
   abstract class Node
-    abstract def match?
+    abstract def match?(context : Context)
   end
 end

@@ -17,7 +17,7 @@ module Pegasus
     def flatten
     end
 
-    def match?
+    def match?(context : Context)
     end
   end
 end

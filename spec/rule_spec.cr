@@ -22,4 +22,9 @@ describe Pegasus::Rule do
 
     comb.should eq(expected_comb)
   end
+
+  it "matches strings as defined" do
+    # phone numbers
+
+  end
 end

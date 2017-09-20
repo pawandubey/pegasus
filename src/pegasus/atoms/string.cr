@@ -8,8 +8,13 @@ module Pegasus
       def initialize(@str : ::String)
       end
 
-      def match?(str : ::String)
-        @str == str
+      def match?(context : Context)
+        if context.rest.starts_with?(@str)
+          context.consume(@str)
+          MatchResult.success(@str)
+        else
+          MatchResult.failure(@str)
+        end
       end
 
       def ==(other : String)
