@@ -15,7 +15,7 @@ module Pegasus
       @source[@pos..-1]
     end
 
-    def reset_pos(pos)
+    private def reset_pos(pos)
       @pos = pos
     end
   end
