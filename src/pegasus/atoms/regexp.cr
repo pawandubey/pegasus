@@ -10,10 +10,9 @@ module Pegasus
         res = @regex.match(context.rest)
         if res
           match_data = res.not_nil!.to_a.compact.join
-          context.consume(match_data)
-          MatchResult.success(match_data)
+          {MatchResult.success(match_data), context.consume(match_data)}
         else
-          MatchResult.failure("")
+          {MatchResult.failure(""), context.dup}
         end
       end
 

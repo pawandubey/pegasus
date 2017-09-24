@@ -5,23 +5,23 @@ module Pegasus
       end
 
       def match?(context : Context)
-        return MatchResult.failure("") if @min > @max
+        return {MatchResult.failure(""), context} if @min > @max
 
         occ = 0
         accum = ""
 
         while occ < @max
-          match = @rule.match?(context)
+          match, context = @rule.match?(context)
           if match.failure?
-            return MatchResult.failure(accum) if occ < @min
-            return MatchResult.success(accum)
+            return {MatchResult.failure(accum), context} if occ < @min
+            return {MatchResult.success(accum), context}
           end
 
           occ += 1
           accum += match.value
         end
 
-        return MatchResult.success(accum)
+        return {MatchResult.success(accum), context}
       end
 
       def flatten

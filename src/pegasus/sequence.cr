@@ -8,13 +8,13 @@ module Pegasus
 
     def match?(context : Context)
       match_data = @seq.reduce("") do |acc, rule|
-        match = rule.match?(context)
-        return MatchResult.failure(match.value) if match.failure?
+        match, context = rule.match?(context)
+        return {MatchResult.failure(match.value), context} if match.failure?
 
         acc + match.value
       end
 
-      MatchResult.success(match_data)
+      {MatchResult.success(match_data), context}
     end
 
     def flatten

@@ -3,13 +3,13 @@ require "../spec_helper"
 describe Pegasus::Atoms::Regexp do
   it "matches similar strings" do
     regexp = Pegasus::Atoms::Regexp.new(/atch/)
-    result = regexp.match?(Pegasus::Context.new("match_me"))
+    result, _ = regexp.match?(Pegasus::Context.new("match_me"))
     result.success?.should be_true
   end
 
   it "doesn't match dissimilar regexps" do
     regexp = Pegasus::Atoms::Regexp.new(/dont/)
-    result = regexp.match?(Pegasus::Context.new("match_me"))
+    result, _ = regexp.match?(Pegasus::Context.new("match_me"))
     result.success?.should be_false
   end
 

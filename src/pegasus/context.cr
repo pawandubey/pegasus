@@ -7,6 +7,7 @@ module Pegasus
 
     def consume(string : MatchResultValue)
       @pos += string.size if string
+      Context.new(@source, @pos)
     end
 
     def rest

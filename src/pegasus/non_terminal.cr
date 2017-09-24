@@ -11,12 +11,12 @@ module Pegasus
     end
 
     def match?(context : Context)
-      match = @children.find { |c| c.match?(context).success? }
+      match = @children.find { |c| c.match?(context)[0].success? }
       if match
-        match = match.match?(context)
-        MatchResult.success(match.value)
+        match, context = match.match?(context)
+        {MatchResult.success(match.value), context}
       else
-        MatchResult.failure("")
+        {MatchResult.failure(""), context}
       end
     end
 

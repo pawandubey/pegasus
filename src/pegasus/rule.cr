@@ -18,8 +18,8 @@ module Pegasus
     def flatten
     end
 
-    def match?(context : Context) : MatchResult
-      MatchResult.failure("")
+    def match?(context : Context) : {MatchResult, Context}
+      {MatchResult.failure(""), Context.new("")}
     end
   end
 end

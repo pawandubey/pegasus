@@ -8,10 +8,9 @@ module Pegasus
 
       def match?(context : Context)
         if context.rest.size >= @str.size && context.rest.starts_with?(@str)
-          context.consume(@str)
-          MatchResult.success(@str)
+          {MatchResult.success(@str), context.consume(@str)}
         else
-          MatchResult.failure(@str)
+          {MatchResult.failure(@str), context.dup}
         end
       end
 

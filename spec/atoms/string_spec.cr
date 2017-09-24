@@ -3,13 +3,13 @@ require "../spec_helper"
 describe Pegasus::Atoms::String do
   it "matches similar strings" do
     string = Pegasus::Atoms::String.new("match_me")
-    result = string.match?(Pegasus::Context.new("match_me"))
+    result, _ = string.match?(Pegasus::Context.new("match_me"))
     result.success?.should be_true
   end
 
   it "doesn't match dissimilar strings" do
     string = Pegasus::Atoms::String.new("match_me")
-    result = string.match?(Pegasus::Context.new("dont_match_me"))
+    result, _ = string.match?(Pegasus::Context.new("dont_match_me"))
     result.success?.should be_false
   end
 
@@ -29,49 +29,49 @@ describe Pegasus::Atoms::String do
 
   it "matches repeat occurances for exact times" do
     string = Pegasus::Atoms::String.new("a").repeat(3)
-    result = string.match?(Pegasus::Context.new("aaa"))
+    result, _ = string.match?(Pegasus::Context.new("aaa"))
     result.success?.should be_true
     result.value.should eq("aaa")
   end
 
   it "fails if doesn't match exact times" do
     string = Pegasus::Atoms::String.new("a").repeat(3)
-    result = string.match?(Pegasus::Context.new("aa"))
+    result, _ = string.match?(Pegasus::Context.new("aa"))
     result.success?.should be_false
     result.value.should eq("aa")
   end
 
   it "matches indefinitely if not supplied with a limit" do
     string = Pegasus::Atoms::String.new("a").repeat
-    result = string.match?(Pegasus::Context.new("aaa"))
+    result, _ = string.match?(Pegasus::Context.new("aaa"))
     result.success?.should be_true
     result.value.should eq("aaa")
   end
 
   it "matches repeat occurances exact times even if there are more to match" do
     string = Pegasus::Atoms::String.new("a").repeat(3)
-    result = string.match?(Pegasus::Context.new("aaaaaa"))
+    result, _ = string.match?(Pegasus::Context.new("aaaaaa"))
     result.success?.should be_true
     result.value.should eq("aaa")
   end
 
   it "matches occurances within the limits" do
     string = Pegasus::Atoms::String.new("a").repeat(3,5)
-    result = string.match?(Pegasus::Context.new("aaaa"))
+    result, _ = string.match?(Pegasus::Context.new("aaaa"))
     result.success?.should be_true
     result.value.should eq("aaaa")
   end
 
   it "matches the possible presence when present" do
     string = Pegasus::Atoms::String.new("a").maybe?
-    result = string.match?(Pegasus::Context.new("a"))
+    result, _ = string.match?(Pegasus::Context.new("a"))
     result.success?.should be_true
     result.value.should eq("a")
   end
 
   it "matches the possible presence when absent" do
     string = Pegasus::Atoms::String.new("a").maybe?
-    result = string.match?(Pegasus::Context.new("bcd"))
+    result, _ = string.match?(Pegasus::Context.new("bcd"))
     result.success?.should be_true
     result.value.should eq("")
   end
@@ -79,7 +79,7 @@ describe Pegasus::Atoms::String do
   it "matches the ignored value without changing context" do
     context = Pegasus::Context.new("aaabcd")
     string = Pegasus::Atoms::String.new("a").repeat(3).ignore
-    result = string.match?(context)
+    result, context = string.match?(context)
     result.success?.should be_true
     result.value.should eq("aaa")
     context.rest.should eq("aaabcd")

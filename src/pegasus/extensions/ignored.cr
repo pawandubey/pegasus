@@ -5,11 +5,10 @@ module Pegasus
       end
 
       def match?(context : Pegasus::Context)
-        old_pos = context.pos
-        match = @rule.match?(context)
-        context.reset_pos(old_pos)
+        old_context = context.dup
+        match, _ = @rule.match?(context)
 
-        match
+        {match, old_context}
       end
 
       def flatten
