@@ -9,21 +9,15 @@ module Pegasus
     end
 
     def root(name : Symbol) : Rule
-      @root = @rules[name]
+      @root = @rules[name].call(self)
     end
 
     def rule(name : Symbol) : Rule
-      @rules[name]
+      @rules[name].call(self)
     end
 
-    def rule(name : Symbol, &block) : Rule
-      @rules[name] = with self yield
-    end
-
-    macro define_method(name, &block)
-      def {{name.id}}({{block.args.splat}})
-        {{block.body}}
-      end
+    def rule(name : Symbol, &block : Parser -> Rule)
+      @rules[name] = block
     end
   end
 end

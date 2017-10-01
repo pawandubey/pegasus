@@ -16,11 +16,15 @@ dependencies:
 
 ## Usage
 
-```crystal
+```ruby
 require "pegasus"
+
+parser = Pegasus::Parser.define do
+
+end
 ```
 
-TODO: Write usage instructions here
+
 
 ## Development
 

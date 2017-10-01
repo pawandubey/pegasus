@@ -9,6 +9,7 @@ require "./pegasus/non_terminal.cr"
 require "./pegasus/sequence.cr"
 require "./pegasus/atoms/*"
 require "./pegasus/extensions/*"
+require "./pegasus/macros.cr"
 require "./pegasus/dsl.cr"
 require "./pegasus/parser.cr"
 

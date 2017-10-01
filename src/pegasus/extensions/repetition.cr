@@ -25,7 +25,7 @@ module Pegasus
       end
 
       def flatten
-         [@rule, @min, @max]
+        [@rule, @min, @max]
       end
     end
   end

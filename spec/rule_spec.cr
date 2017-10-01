@@ -13,10 +13,10 @@ describe Pegasus::Rule do
 
     expected_comb = Pegasus::NonTerminal.new(
       Pegasus::NonTerminal.new(construct_rule(Pegasus::Atoms::String),
-      Pegasus::Sequence.new(
-        construct_rule(Pegasus::Atoms::String),
-        construct_rule(Pegasus::Atoms::String)
-      )),
+        Pegasus::Sequence.new(
+          construct_rule(Pegasus::Atoms::String),
+          construct_rule(Pegasus::Atoms::String)
+        )),
       construct_rule(Pegasus::Atoms::String)
     )
 

@@ -6,13 +6,13 @@ module Pegasus
     getter :rules, :root
 
     private def initialize
-      @rules = {} of Symbol => Rule
+      @rules = {} of Symbol => Proc(Parser, Rule)
       @root = nil
     end
 
-    def self.define() : Pegasus::Parser
+    def self.define : Pegasus::Parser
       parser = new
-      with parser yield
+      yield parser
       parser
     end
 

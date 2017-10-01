@@ -1,6 +1,7 @@
 module Pegasus
   module Repeatable
     alias Number = Int32 | UInt64
+
     def repeat(num : Number)
       Pegasus::Extensions::Repetition.new(self, num, num)
     end

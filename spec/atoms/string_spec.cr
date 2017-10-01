@@ -56,7 +56,7 @@ describe Pegasus::Atoms::String do
   end
 
   it "matches occurances within the limits" do
-    string = Pegasus::Atoms::String.new("a").repeat(3,5)
+    string = Pegasus::Atoms::String.new("a").repeat(3, 5)
     result, _ = string.match?(Pegasus::Context.new("aaaa"))
     result.success?.should be_true
     result.value.should eq("aaaa")

@@ -7,24 +7,25 @@ describe Pegasus::Parser do
   end
 
   it "creates a rules" do
-    parser = Pegasus::Parser.define do
-      rule(:abc) { str("abc") }
-      rule(:def) { str("def") }
-      rule(:abcdef) { rule(:abc) >> rule(:def) }
+    parser = Pegasus::Parser.define do |p|
+      p.rule(:abc) { |p| p.str("abc") }
+      p.rule(:def) { |p| p.str("def") }
+      p.rule(:abcdef) { |p| p.rule(:abc) >> p.rule(:def) }
     end
 
     parser.rules.size.should eq(3)
   end
 
   it "parses strings" do
-    parser = Pegasus::Parser.define do
-      rule(:abc) { str("abc") }
-      rule(:def) { str("def") }
-      rule(:abcdef) { rule(:abc) >> rule(:def) }
+    parser = Pegasus::Parser.define do |p|
+      p.rule(:def) { |p| p.str("def") }
+      p.rule(:abcdef) { |p| p.rule(:abc) >> p.rule(:def) }
+      p.rule(:abc) { |p| p.str("abc") }
 
-      root(:abcdef)
+      p.root(:abcdef)
     end
 
-    parser.parse("abcdef").should be_truthy
+    parser.parse("abcdef").success?.should be_true
+    parser.parse("def").failure?.should be_true
   end
 end
