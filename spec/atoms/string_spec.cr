@@ -31,49 +31,49 @@ describe Pegasus::Atoms::String do
     string = Pegasus::Atoms::String.new("a").repeat(3)
     result, _ = string.match?(Pegasus::Context.new("aaa"))
     result.success?.should be_true
-    result.value.should eq("aaa")
+    result.parse_tree.value.should eq("aaa")
   end
 
   it "fails if doesn't match exact times" do
     string = Pegasus::Atoms::String.new("a").repeat(3)
     result, _ = string.match?(Pegasus::Context.new("aa"))
     result.success?.should be_false
-    result.value.should eq("aa")
+    result.parse_tree.value.should eq("aa")
   end
 
   it "matches indefinitely if not supplied with a limit" do
     string = Pegasus::Atoms::String.new("a").repeat
     result, _ = string.match?(Pegasus::Context.new("aaa"))
     result.success?.should be_true
-    result.value.should eq("aaa")
+    result.parse_tree.value.should eq("aaa")
   end
 
   it "matches repeat occurances exact times even if there are more to match" do
     string = Pegasus::Atoms::String.new("a").repeat(3)
     result, _ = string.match?(Pegasus::Context.new("aaaaaa"))
     result.success?.should be_true
-    result.value.should eq("aaa")
+    result.parse_tree.value.should eq("aaa")
   end
 
   it "matches occurances within the limits" do
     string = Pegasus::Atoms::String.new("a").repeat(3, 5)
     result, _ = string.match?(Pegasus::Context.new("aaaa"))
     result.success?.should be_true
-    result.value.should eq("aaaa")
+    result.parse_tree.value.should eq("aaaa")
   end
 
   it "matches the possible presence when present" do
     string = Pegasus::Atoms::String.new("a").maybe?
     result, _ = string.match?(Pegasus::Context.new("a"))
     result.success?.should be_true
-    result.value.should eq("a")
+    result.parse_tree.value.should eq("a")
   end
 
   it "matches the possible presence when absent" do
     string = Pegasus::Atoms::String.new("a").maybe?
     result, _ = string.match?(Pegasus::Context.new("bcd"))
     result.success?.should be_true
-    result.value.should eq("")
+    result.parse_tree.value.should eq("")
   end
 
   it "matches the ignored value without changing context" do
@@ -81,7 +81,7 @@ describe Pegasus::Atoms::String do
     string = Pegasus::Atoms::String.new("a").repeat(3).ignore
     result, context = string.match?(context)
     result.success?.should be_true
-    result.value.should eq("aaa")
+    result.parse_tree.value.should eq("aaa")
     context.rest.should eq("aaabcd")
   end
 end

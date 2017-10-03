@@ -5,7 +5,7 @@ module Pegasus
     def initialize(@source : String, @pos = 0)
     end
 
-    def consume(string : MatchResultValue)
+    def consume(string : ::String)
       @pos += string.size if string
       Context.new(@source, @pos)
     end

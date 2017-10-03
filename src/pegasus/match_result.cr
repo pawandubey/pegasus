@@ -1,18 +1,16 @@
 module Pegasus
-  alias MatchResultValue = ::String
-
   class MatchResult
-    getter :value
+    getter :parse_tree
 
-    def initialize(@result : Bool, @value : MatchResultValue)
+    def initialize(@result : Bool, @parse_tree : Pegasus::Tree)
     end
 
-    def self.success(matched_value : MatchResultValue)
-      MatchResult.new(true, matched_value)
+    def self.success(tree : Pegasus::Tree)
+      MatchResult.new(true, tree)
     end
 
-    def self.failure(matched_value : MatchResultValue)
-      MatchResult.new(false, matched_value)
+    def self.failure(tree : Pegasus::Tree)
+      MatchResult.new(false, tree)
     end
 
     def success?

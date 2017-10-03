@@ -4,17 +4,19 @@ module Pegasus
       @seq = [] of Rule
       @seq << head
       @seq = @seq + tail.to_a
+      @label = :seq
     end
 
     def match?(context : Context)
-      match_data = @seq.reduce("") do |acc, rule|
+      tree = @seq.reduce(Branch.new(@label)) do |acc, rule|
         match, context = rule.match?(context)
-        return {MatchResult.failure(match.value), context} if match.failure?
+        return {MatchResult.failure(match.parse_tree), context} if match.failure?
 
-        acc + match.value
+        acc << match.parse_tree
+        acc
       end
 
-      {MatchResult.success(match_data), context}
+      {MatchResult.success(tree), context}
     end
 
     def flatten

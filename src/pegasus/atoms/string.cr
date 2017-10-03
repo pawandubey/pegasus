@@ -4,13 +4,16 @@ module Pegasus
       getter :str
 
       def initialize(@str : ::String)
+        @label = :string
       end
 
       def match?(context : Context)
         if context.rest.size >= @str.size && context.rest.starts_with?(@str)
-          {MatchResult.success(@str), context.consume(@str)}
+          node = Pegasus::Leaf.new(@label, @str)
+          {MatchResult.success(node), context.consume(@str)}
         else
-          {MatchResult.failure(@str), context.dup}
+          node = Pegasus::Leaf.new(@label, @str)
+          {MatchResult.failure(node), context.dup}
         end
       end
 

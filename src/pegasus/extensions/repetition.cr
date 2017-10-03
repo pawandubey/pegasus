@@ -2,13 +2,14 @@ module Pegasus
   module Extensions
     class Repetition < Pegasus::Rule
       def initialize(@rule : Node, @min : Number, @max : Number)
+        @label = :rep
       end
 
       def match?(context : Context)
-        return {MatchResult.failure(""), context} if @min > @max
+        return {MatchResult.failure(Leaf.new(@label, "")), context} if @min > @max
 
         occ = 0
-        accum = ""
+        accum = Branch.new(@label)
 
         while occ < @max
           match, context = @rule.match?(context)
@@ -18,7 +19,7 @@ module Pegasus
           end
 
           occ += 1
-          accum += match.value
+          accum << match.parse_tree
         end
 
         return {MatchResult.success(accum), context}

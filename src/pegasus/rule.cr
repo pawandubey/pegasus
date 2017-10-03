@@ -1,8 +1,5 @@
 module Pegasus
   class Rule < Node
-    include Pegasus::Ignorable
-    include Pegasus::Repeatable
-
     def >>(rule : Rule)
       Sequence.new(self, rule)
     end
@@ -19,7 +16,7 @@ module Pegasus
     end
 
     def match?(context : Context) : {MatchResult, Context}
-      {MatchResult.failure(""), Context.new("")}
+      {MatchResult.failure(Leaf.new(:rule, "")), Context.new("")}
     end
   end
 end

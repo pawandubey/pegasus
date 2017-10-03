@@ -4,15 +4,18 @@ module Pegasus
       getter :regex
 
       def initialize(@regex : Regex)
+        @label = :regexp
       end
 
       def match?(context : Context)
         res = @regex.match(context.rest)
         if res
           match_data = res.not_nil!.to_a.compact.join
-          {MatchResult.success(match_data), context.consume(match_data)}
+          node = Pegasus::Leaf.new(@label, match_data)
+          {MatchResult.success(node), context.consume(match_data)}
         else
-          {MatchResult.failure(""), context.dup}
+          node = Pegasus::Leaf.new(@label, "")
+          {MatchResult.failure(node), context.dup}
         end
       end
 

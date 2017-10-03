@@ -1,8 +1,8 @@
 require "./pegasus/context.cr"
 require "./pegasus/match_result.cr"
-require "./pegasus/node.cr"
 require "./pegasus/repeatable.cr"
 require "./pegasus/ignorable.cr"
+require "./pegasus/node.cr"
 require "./pegasus/rule.cr"
 require "./pegasus/terminal.cr"
 require "./pegasus/non_terminal.cr"
@@ -12,6 +12,7 @@ require "./pegasus/extensions/*"
 require "./pegasus/macros.cr"
 require "./pegasus/dsl.cr"
 require "./pegasus/parser.cr"
+require "./pegasus/ast.cr"
 
 module Pegasus
 end
