@@ -11,10 +11,10 @@ module Pegasus
         res = @regex.match(context.rest)
         if res
           match_data = res.not_nil!.to_a.compact.join
-          node = Pegasus::Leaf.new(@label, match_data)
+          node = Pegasus::Leaf(::String).new(@label, match_data)
           {MatchResult.success(node), context.consume(match_data)}
         else
-          node = Pegasus::Leaf.new(@label, "")
+          node = Pegasus::Leaf(::String).new(@label, "")
           {MatchResult.failure(node), context.dup}
         end
       end

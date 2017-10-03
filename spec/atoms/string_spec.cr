@@ -84,4 +84,12 @@ describe Pegasus::Atoms::String do
     result.parse_tree.value.should eq("aaa")
     context.rest.should eq("aaabcd")
   end
+
+  it "redefines label with aka" do
+    string = Pegasus::Atoms::String.new("match_me")
+
+    string.label.should eq(:string)
+    string.aka(:abc)
+    string.label.should eq(:abc)
+  end
 end

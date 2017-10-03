@@ -9,10 +9,10 @@ module Pegasus
 
       def match?(context : Context)
         if context.rest.size >= @str.size && context.rest.starts_with?(@str)
-          node = Pegasus::Leaf.new(@label, @str)
+          node = Pegasus::Leaf(::String).new(@label, @str)
           {MatchResult.success(node), context.consume(@str)}
         else
-          node = Pegasus::Leaf.new(@label, @str)
+          node = Pegasus::Leaf(::String).new(@label, @str)
           {MatchResult.failure(node), context.dup}
         end
       end

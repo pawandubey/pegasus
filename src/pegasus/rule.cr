@@ -1,5 +1,5 @@
 module Pegasus
-  class Rule < Node
+  abstract class Rule < Node
     def >>(rule : Rule)
       Sequence.new(self, rule)
     end

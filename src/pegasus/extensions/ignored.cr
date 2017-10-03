@@ -2,6 +2,7 @@ module Pegasus
   module Extensions
     class Ignored < Pegasus::Rule
       def initialize(@rule : Pegasus::Rule)
+        @label = :ignore
       end
 
       def match?(context : Pegasus::Context)

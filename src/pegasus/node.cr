@@ -6,5 +6,14 @@ module Pegasus
     getter :label
 
     abstract def match?(context : Context)
+
+    def initialize
+      @label = :node
+    end
+
+    def aka(label : Symbol)
+      @label = label.not_nil!
+      self
+    end
   end
 end

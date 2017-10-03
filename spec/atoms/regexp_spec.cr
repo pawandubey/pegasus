@@ -26,4 +26,11 @@ describe Pegasus::Atoms::Regexp do
 
     regexp.should_not eq(another_regexp)
   end
+
+  it "redefines label with aka" do
+    regexp = Pegasus::Atoms::Regexp.new(/match/)
+    regexp.label.should eq(:regexp)
+    regexp.aka(:reg)
+    regexp.label.should eq(:reg)
+  end
 end
