@@ -8,7 +8,7 @@ module Pegasus
     end
 
     def match?(context : Context)
-      tree = @seq.reduce(Branch.new(@label)) do |acc, rule|
+      tree = @seq.reduce(Branch(String).new(@label)) do |acc, rule|
         match, context = rule.match?(context)
         return {MatchResult.failure(match.parse_tree), context} if match.failure?
 

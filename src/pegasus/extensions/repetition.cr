@@ -9,7 +9,7 @@ module Pegasus
         return {MatchResult.failure(Leaf.new(@label, "")), context} if @min > @max
 
         occ = 0
-        accum = Branch.new(@label)
+        accum = Branch(String).new(@label)
 
         while occ < @max
           match, context = @rule.match?(context)

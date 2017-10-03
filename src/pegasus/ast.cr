@@ -1,22 +1,33 @@
-module Pegasus
-  alias Tree = Leaf | Branch
+require "json"
 
-  class Leaf
+module Pegasus
+  alias ParseTree = Leaf(String) | Branch(String)
+
+  class Leaf(T)
     getter :label
 
-    def initialize(@label : Symbol, @item : ::String)
+    def initialize(@label : Symbol, @item : T)
     end
 
     def value
       @item
     end
+
+    def dump
+      to_json
+    end
+
+    JSON.mapping(
+      label: Symbol,
+      item: T
+    )
   end
 
-  class Branch
+  class Branch(T)
     getter :label, :children
 
     def initialize(@label : Symbol)
-      @children = [] of Tree
+      @children = [] of Leaf(T) | Branch(T)
     end
 
     def value
@@ -27,8 +38,17 @@ module Pegasus
       end
     end
 
-    def <<(tree : Tree)
+    def <<(tree : Leaf(T) | Branch(T))
       @children << tree
     end
+
+    def dump
+      to_json
+    end
+
+    JSON.mapping(
+      label: Symbol,
+      children: Array(Branch(T) | Leaf(T))
+    )
   end
 end

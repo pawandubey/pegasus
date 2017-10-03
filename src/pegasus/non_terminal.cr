@@ -18,7 +18,7 @@ module Pegasus
         match, context = match.match?(context)
         {MatchResult.success(match.parse_tree), context}
       else
-        {MatchResult.failure(Branch.new(@label)), context}
+        {MatchResult.failure(Branch(String).new(@label)), context}
       end
     end
 

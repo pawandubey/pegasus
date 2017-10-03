@@ -2,14 +2,14 @@ module Pegasus
   class MatchResult
     getter :parse_tree
 
-    def initialize(@result : Bool, @parse_tree : Pegasus::Tree)
+    def initialize(@result : Bool, @parse_tree : Pegasus::ParseTree)
     end
 
-    def self.success(tree : Pegasus::Tree)
+    def self.success(tree : Pegasus::ParseTree)
       MatchResult.new(true, tree)
     end
 
-    def self.failure(tree : Pegasus::Tree)
+    def self.failure(tree : Pegasus::ParseTree)
       MatchResult.new(false, tree)
     end
 
