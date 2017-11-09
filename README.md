@@ -16,14 +16,27 @@ dependencies:
 
 ## Usage
 
-```ruby
-require "pegasus"
+``` crystal
+require 'pegasus'
 
-parser = Pegasus::Parser.define do
+parser = Pegasus::Parser.define do |p|
+  p.rule(:add) { |p| p.rule(:mul).aka(:l) >> (p.rule(:addop) >> p.rule(:mul)).repeat(1) | p.rule(:mul) }
 
+  p.rule(:mul) { |p| p.rule(:int).aka(:l) >> (p.rule(:mulop) >> p.rule(:int)).repeat(1) | p.rule(:int) }
+
+  p.rule(:int) { |p| p.rule(:digit).repeat(1).aka(:i) >> p.rule(:space?) }
+
+  p.rule(:addop) { |p| p.match(/+-/).aka(:o) >> p.rule(:space?) }
+
+  p.rule(:mulop) { |p| p.match(/*\//).aka(:o) >> p.rule(:space?) }
+
+  p.rule(:digit) { |p| p.match(/\d/) }
+
+  p.rule(:space?) { |p| p.match(/\s*/).repeat }
 end
-```
 
+parse_tree = parser.parse("1 + 2 - 3 * 5 / 2")
+```
 
 
 ## Development
