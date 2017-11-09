@@ -6,7 +6,7 @@ module Pegasus
       Pegasus::Extensions::Repetition.new(self, num, num)
     end
 
-    def repeat(min = UInt64::MIN, max = UInt64::MAX)
+    def repeat(min = 0, max = UInt64::MAX)
       Pegasus::Extensions::Repetition.new(self, min, max)
     end
 

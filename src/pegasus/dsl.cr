@@ -5,7 +5,7 @@ module Pegasus
     end
 
     def match(regex : Regex) : Rule
-      Terminal.new(Regexp.new(regex))
+      Terminal.new(Pegasus::Atoms::Regexp.new(regex))
     end
 
     def root(name : Symbol) : Rule
