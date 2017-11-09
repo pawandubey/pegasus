@@ -17,6 +17,10 @@ module Pegasus
       to_json
     end
 
+    def prune
+      self
+    end
+
     JSON.mapping(
       label: Symbol,
       item: T
@@ -44,6 +48,14 @@ module Pegasus
 
     def dump
       to_json
+    end
+
+    def prune
+      Branch(T).new(@label).tap do |branch|
+        @children.each do |child|
+          branch << child if child.label != :ignore
+        end
+      end
     end
 
     JSON.mapping(

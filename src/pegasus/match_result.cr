@@ -3,6 +3,7 @@ module Pegasus
     getter :parse_tree
 
     def initialize(@result : Bool, @parse_tree : Pegasus::ParseTree)
+      @parse_tree = parse_tree.prune
     end
 
     def self.success(tree : Pegasus::ParseTree)

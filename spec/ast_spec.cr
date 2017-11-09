@@ -36,4 +36,21 @@ describe Pegasus::ParseTree do
     res = parser.parse("abcdef")
     res.parse_tree.dump.should eq(expected_parse_tree.dump)
   end
+
+  it "ignores ignored nodes while still matching" do
+    parser = Pegasus::Parser.define do |p|
+      p.rule(:def) { |p| p.str("def") }
+      p.rule(:abcdef) { |p| p.rule(:abc).aka(:a2c) >> p.rule(:def).ignore }
+      p.rule(:abc) { |p| p.str("abc") }
+
+      p.root(:abcdef)
+    end
+
+    expected_parse_tree = Pegasus::Branch(String).new(:seq).tap do |tree|
+      tree << Pegasus::Leaf.new(:a2c, "abc")
+    end
+
+    res = parser.parse("abcdef")
+    res.parse_tree.dump.should eq(expected_parse_tree.dump)
+  end
 end
