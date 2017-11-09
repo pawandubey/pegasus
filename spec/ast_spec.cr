@@ -53,4 +53,22 @@ describe Pegasus::ParseTree do
     res = parser.parse("abcdef")
     res.parse_tree.dump.should eq(expected_parse_tree.dump)
   end
+
+  it "repeats nodes as expected" do
+    parser = Pegasus::Parser.define do |p|
+      p.rule(:abc) { |p| p.str("abc").aka(:abc) }
+      p.rule(:abc3) { |p| p.rule(:abc).repeat(3) }
+
+      p.root(:abc3)
+    end
+
+    expected_parse_tree = Pegasus::Branch(String).new(:rep).tap do |tree|
+      tree << Pegasus::Leaf.new(:abc, "abc")
+      tree << Pegasus::Leaf.new(:abc, "abc")
+      tree << Pegasus::Leaf.new(:abc, "abc")
+    end
+
+    res = parser.parse("abcabcabc")
+    res.parse_tree.dump.should eq(expected_parse_tree.dump)
+  end
 end
