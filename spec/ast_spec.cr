@@ -72,20 +72,19 @@ describe Pegasus::ParseTree do
     res.parse_tree.dump.should eq(expected_parse_tree.dump)
   end
 
-  pending "matches simple calculator" do
+  it "matches simple calculator" do
     parser = Pegasus::Parser.define do |p|
-      p.rule(:add) { |p| p.rule(:mul).aka(:l) >> (p.rule(:addop) >> p.rule(:mul)).repeat(1) | p.rule(:mul) }
-      p.rule(:mul) { |p| p.rule(:int).aka(:l) >> (p.rule(:mulop) >> p.rule(:int)).repeat(1) | p.rule(:int) }
-      p.rule(:int) { |p| p.rule(:digit).repeat(1).aka(:i) >> p.rule(:space?) }
-      p.rule(:addop) { |p| p.match(/\+\-/).aka(:o) >> p.rule(:space?) }
-      p.rule(:mulop) { |p| p.match(/\*\//).aka(:o) >> p.rule(:space?) }
-      p.rule(:digit) { |p| p.match(/\d/) }
-      p.rule(:space?) { |p| p.match(/\s*/).repeat }
-
+      p.rule(:add) { |p| p.rule(:mul).aka(:l) >> (p.rule(:addop) >> p.rule(:mul)).repeat(1, 100) | p.rule(:mul) }
+      p.rule(:mul) { |p| p.rule(:int).aka(:l) >> (p.rule(:mulop) >> p.rule(:int)).repeat(1, 100) | p.rule(:int) }
+      p.rule(:int) { |p| p.rule(:digit).aka(:i) >> p.rule(:space?) }
+      p.rule(:addop) { |p| p.match(/\b[\+\-]\b/).aka(:o) >> p.rule(:space?) }
+      p.rule(:mulop) { |p| p.match(/\b[\*\/]\b/).aka(:o) >> p.rule(:space?) }
+      p.rule(:digit) { |p| p.match(/\d+/) }
+      p.rule(:space?) { |p| p.match(/\s*/) }
       p.root(:add)
     end
 
-    res = parser.parse("1 * 2")
-    res.parse_tree.dump.should eq("")
+    res = parser.parse("0- 2 * 3 + 3 / 17-4")
+    res.success?.should eq(true)
   end
 end

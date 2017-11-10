@@ -8,9 +8,10 @@ module Pegasus
     end
 
     def match?(context : Context)
+      old_context = context.dup
       tree = @seq.reduce(Branch(String).new(@label)) do |acc, rule|
         match, context = rule.match?(context)
-        return {MatchResult.failure(match.parse_tree), context} if match.failure?
+        return {MatchResult.failure(match.parse_tree), old_context} if match.failure?
 
         acc << match.parse_tree
         acc
