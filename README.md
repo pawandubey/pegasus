@@ -20,22 +20,28 @@ dependencies:
 require 'pegasus'
 
 parser = Pegasus::Parser.define do |p|
-  p.rule(:add) { |p| p.rule(:mul).aka(:l) >> (p.rule(:addop) >> p.rule(:mul)).repeat(1) | p.rule(:mul) }
+  p.rule(:add) do |p|
+    p.rule(:mul).aka(:l) >> (p.rule(:addop) >> p.rule(:mul)).repeat(1, 100) | p.rule(:mul)
+  end
 
-  p.rule(:mul) { |p| p.rule(:int).aka(:l) >> (p.rule(:mulop) >> p.rule(:int)).repeat(1) | p.rule(:int) }
+  p.rule(:mul) do |p|
+    p.rule(:int).aka(:l) >> (p.rule(:mulop) >> p.rule(:int)).repeat(1, 100) | p.rule(:int)
+  end
 
-  p.rule(:int) { |p| p.rule(:digit).repeat(1).aka(:i) >> p.rule(:space?) }
+  p.rule(:int) { |p| p.rule(:digit).aka(:i) >> p.rule(:space?) }
 
-  p.rule(:addop) { |p| p.match(/+-/).aka(:o) >> p.rule(:space?) }
+  p.rule(:addop) { |p| p.match(/\b[\+\-]\b/).aka(:o) >> p.rule(:space?) }
 
-  p.rule(:mulop) { |p| p.match(/*\//).aka(:o) >> p.rule(:space?) }
+  p.rule(:mulop) { |p| p.match(/\b[\*\/]\b/).aka(:o) >> p.rule(:space?) }
 
-  p.rule(:digit) { |p| p.match(/\d/) }
+  p.rule(:digit) { |p| p.match(/\d+/) }
 
-  p.rule(:space?) { |p| p.match(/\s*/).repeat }
+  p.rule(:space?) { |p| p.match(/\s*/) }
+
+  p.root(:add)
 end
 
-parse_tree = parser.parse("1 + 2 - 3 * 5 / 2")
+parser.parse("0- 2 * 3 + 3 / 17-4").success? #=> true
 ```
 
 
