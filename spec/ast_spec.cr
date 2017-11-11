@@ -104,6 +104,5 @@ describe Pegasus::ParseTree do
 
     res = parser.parse("0-1 + 2 /4 * 51 ")
     res.success?.should eq(true)
-    puts res.parse_tree.dump
   end
 end
