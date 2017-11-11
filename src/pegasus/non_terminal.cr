@@ -13,9 +13,13 @@ module Pegasus
     end
 
     def match?(context : Context)
-      match = @children.find { |c| c.match?(context)[0].success? }
-      if match
-        match, context = match.match?(context)
+      matched_node = @children.find do |c|
+        temp_context = context.dup
+        c.match?(temp_context)[0].success?
+      end
+
+      if matched_node
+        match, context = matched_node.match?(context)
         {MatchResult.success(match.parse_tree), context}
       else
         {MatchResult.failure(Branch(String).new(@label)), context}
