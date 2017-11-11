@@ -2,13 +2,17 @@ module Pegasus
   module Repeatable
     alias Number = Int32 | UInt64
 
+    def repeat
+      Pegasus::Extensions::Repetition.new(self, 1, UInt64::MAX)
+    end
+
     def repeat(num : Number)
       raise ArgumentError.new("Expected positive. Was #{num}.") if num < 0
 
       Pegasus::Extensions::Repetition.new(self, num, num)
     end
 
-    def repeat(min = 0, max = UInt64::MAX)
+    def repeat(min = UInt64::MIN, max = UInt64::MAX)
       [min, max].each do |num|
         raise ArgumentError.new("Expected positive. Was #{num}.") if num < 0
       end

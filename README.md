@@ -25,7 +25,7 @@ require "pegasus"
 
 parser = Pegasus::Parser.define do |p|
   p.rule(:query) do |p| # complex base rule with alternatives, repetition and optional occurence
-    (p.rule(:pair) >> p.rule(:sep) >> p.rule(:pair).maybe?).repeat(1, 100) | p.rule(:pair)
+    (p.rule(:pair) >> p.rule(:sep) >> p.rule(:pair).maybe?).repeat | p.rule(:pair)
   end
 
   p.rule(:pair) { |p| p.rule(:str).aka(:key) >> p.str("=") >> p.rule(:str).aka(:val).maybe? }
@@ -60,11 +60,11 @@ require "pegasus"
 
 parser = Pegasus::Parser.define do |p|
   p.rule(:add) do |p|
-    p.rule(:mul).aka(:l) >> (p.rule(:addop) >> p.rule(:mul)).repeat(1, 100) | p.rule(:mul)
+    p.rule(:mul).aka(:l) >> (p.rule(:addop) >> p.rule(:mul)).repeat | p.rule(:mul)
   end
 
   p.rule(:mul) do |p|
-    p.rule(:int).aka(:l) >> (p.rule(:mulop) >> p.rule(:int)).repeat(1, 100) | p.rule(:int)
+    p.rule(:int).aka(:l) >> (p.rule(:mulop) >> p.rule(:int)).repeat | p.rule(:int)
   end
 
   p.rule(:int) do |p|
