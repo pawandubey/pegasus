@@ -76,13 +76,13 @@ describe Pegasus::Atoms::String do
     result.parse_tree.value.should eq("")
   end
 
-  it "matches the ignored value without changing context" do
+  it "matches the ignored value" do
     context = Pegasus::Context.new("aaabcd")
     string = Pegasus::Atoms::String.new("a").repeat(3).ignore
     result, context = string.match?(context)
     result.success?.should be_true
     result.parse_tree.value.should eq("aaa")
-    context.rest.should eq("aaabcd")
+    context.rest.should eq("bcd")
   end
 
   it "redefines label with aka" do

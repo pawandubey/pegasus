@@ -7,10 +7,10 @@ module Pegasus
 
       def match?(context : Pegasus::Context)
         old_context = context.dup
-        match, _ = @rule.match?(context)
+        match, context = @rule.match?(context)
 
         if match.success?
-          {MatchResult.success(Leaf.new(@label, match.parse_tree.value)), old_context}
+          {MatchResult.success(Leaf.new(@label, match.parse_tree.value)), context}
         else
           {MatchResult.failure(Leaf.new(@label, match.parse_tree.value)), old_context}
         end
