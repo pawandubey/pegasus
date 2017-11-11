@@ -97,4 +97,22 @@ describe Pegasus::ParseTree do
     res = parser.parse("0-1 + 2 /4 * 51 ")
     res.success?.should eq(true)
   end
+
+  it "matches URL query strings" do
+    parser = Pegasus::Parser.define do |p|
+      p.rule(:query) do |p|
+        (p.rule(:pair) >> p.rule(:sep) >> p.rule(:pair).maybe?).repeat(1, 100) | p.rule(:pair)
+      end
+
+      p.rule(:pair) { |p| p.rule(:str).aka(:key) >> p.str("=") >> p.rule(:str).aka(:val).maybe? }
+
+      p.rule(:sep) { |p| p.str("&").aka(:sep) }
+      p.rule(:str) { |p| p.match(/\A[^\s\/\\\.&=]+/) }
+
+      p.root(:query)
+    end
+
+    res = parser.parse("name=ferret&color=purple")
+    res.success?.should eq(true)
+  end
 end
