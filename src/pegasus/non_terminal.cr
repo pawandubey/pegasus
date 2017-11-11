@@ -14,8 +14,7 @@ module Pegasus
 
     def match?(context : Context)
       matched_node = @children.find do |c|
-        temp_context = context.dup
-        c.match?(temp_context)[0].success?
+        c.match?(context)[0].success?
       end
 
       if matched_node

@@ -6,8 +6,9 @@ module Pegasus
     end
 
     def consume(string : ::String)
-      @pos += string.size if string
-      Context.new(@source, @pos)
+      pos = @pos
+      pos += string.size if string
+      Context.new(@source, pos)
     end
 
     def rest
