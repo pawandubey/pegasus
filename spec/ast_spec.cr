@@ -75,22 +75,14 @@ describe Pegasus::ParseTree do
   it "matches simple calculator" do
     parser = Pegasus::Parser.define do |p|
       p.rule(:add) do |p|
-        p.rule(:mul).aka(:l) >> (p.rule(:addop) >> p.rule(:mul)).repeat(1, 100) | p.rule(:secmul)
+        p.rule(:mul).aka(:l) >> (p.rule(:addop) >> p.rule(:mul)).repeat(1, 100) | p.rule(:mul)
       end
 
       p.rule(:mul) do |p|
-        p.rule(:int).aka(:l) >> (p.rule(:mulop) >> p.rule(:int)).repeat(1, 100) | p.rule(:secint)
-      end
-
-      p.rule(:secmul) do |p|
-        p.rule(:int).aka(:l) >> (p.rule(:mulop) >> p.rule(:int)).repeat(1, 100) | p.rule(:secint)
+        p.rule(:int).aka(:l) >> (p.rule(:mulop) >> p.rule(:int)).repeat(1, 100) | p.rule(:int)
       end
 
       p.rule(:int) do |p|
-        p.rule(:digit).aka(:i) >> p.rule(:space?).ignore
-      end
-
-      p.rule(:secint) do |p|
         p.rule(:digit).aka(:i) >> p.rule(:space?).ignore
       end
 
