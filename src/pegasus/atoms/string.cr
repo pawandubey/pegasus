@@ -13,7 +13,7 @@ module Pegasus
           {MatchResult.success(node), context.consume(@str)}
         else
           node = Pegasus::Leaf(::String).new(@label, @str)
-          {MatchResult.failure(node), context.dup}
+          {MatchResult.failure(node), context}
         end
       end
 
