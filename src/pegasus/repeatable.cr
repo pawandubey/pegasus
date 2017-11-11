@@ -12,10 +12,12 @@ module Pegasus
       Pegasus::Extensions::Repetition.new(self, num, num)
     end
 
-    def repeat(min = UInt64::MIN, max = UInt64::MAX)
+    def repeat(min : Number, max : Number)
       [min, max].each do |num|
         raise ArgumentError.new("Expected positive. Was #{num}.") if num < 0
       end
+
+      min, max = [min, max].map { |num| num.clamp(UInt64::MIN, UInt64::MAX) }
 
       Pegasus::Extensions::Repetition.new(self, min, max)
     end
