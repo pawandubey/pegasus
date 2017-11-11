@@ -17,31 +17,42 @@ dependencies:
 ## Usage
 
 ``` crystal
-require 'pegasus'
+# simple calculator example
+
+require "pegasus"
 
 parser = Pegasus::Parser.define do |p|
   p.rule(:add) do |p|
-    p.rule(:mul).aka(:l) >> (p.rule(:addop) >> p.rule(:mul)).repeat(1, 100) | p.rule(:mul)
+    p.rule(:mul).aka(:l) >> (p.rule(:addop) >> p.rule(:mul)).repeat(1, 100) | p.rule(:secmul)
   end
 
   p.rule(:mul) do |p|
-    p.rule(:int).aka(:l) >> (p.rule(:mulop) >> p.rule(:int)).repeat(1, 100) | p.rule(:int)
+    p.rule(:int).aka(:l) >> (p.rule(:mulop) >> p.rule(:int)).repeat(1, 100) | p.rule(:secint)
   end
 
-  p.rule(:int) { |p| p.rule(:digit).aka(:i) >> p.rule(:space?) }
+  p.rule(:secmul) do |p|
+    p.rule(:int).aka(:l) >> (p.rule(:mulop) >> p.rule(:int)).repeat(1, 100) | p.rule(:secint)
+  end
 
-  p.rule(:addop) { |p| p.match(/\b[\+\-]\b/).aka(:o) >> p.rule(:space?) }
+  p.rule(:int) do |p|
+    p.rule(:digit).aka(:i) >> p.rule(:space?).ignore
+  end
 
-  p.rule(:mulop) { |p| p.match(/\b[\*\/]\b/).aka(:o) >> p.rule(:space?) }
+  p.rule(:secint) do |p|
+    p.rule(:digit).aka(:i) >> p.rule(:space?).ignore
+  end
 
-  p.rule(:digit) { |p| p.match(/\d+/) }
-
-  p.rule(:space?) { |p| p.match(/\s*/) }
+  p.rule(:addop) { |p| p.match(/\A[\+\-]/).aka(:o) >> p.rule(:space?).ignore }
+  p.rule(:mulop) { |p| p.match(/\A[\*\/]/).aka(:o) >> p.rule(:space?).ignore }
+  p.rule(:digit) { |p| p.match(/\A\d+/) }
+  p.rule(:space?) { |p| p.match(/\A\s*/) }
 
   p.root(:add)
 end
 
-parser.parse("0- 2 * 3 + 3 / 17-4").success? #=> true
+res = parser.parse("0-1 + 2 /4 * 51 ")
+
+res.success? #=> true
 ```
 
 
