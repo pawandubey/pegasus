@@ -114,5 +114,7 @@ describe Pegasus::ParseTree do
 
     res = parser.parse("name=ferret&color=purple")
     res.success?.should eq(true)
+
+    res.parse_tree.dump.should eq(%({"label":"rep","children":[{"label":"seq","children":[{"label":"seq","children":[{"label":"seq","children":[{"label":"seq","children":[{"label":"key","item":"name"},{"label":"terminal","item":"="}]},{"label":"rep","children":[{"label":"val","item":"ferret"}]}]},{"label":"sep","item":"&"}]},{"label":"rep","children":[{"label":"seq","children":[{"label":"seq","children":[{"label":"key","item":"color"},{"label":"terminal","item":"="}]},{"label":"rep","children":[{"label":"val","item":"purple"}]}]}]}]}]}))
   end
 end
