@@ -1,8 +1,6 @@
 require "json"
 
 module Pegasus
-  alias ParseTree = Leaf(String) | Branch(String)
-
   class Leaf(T)
     getter :label
 

@@ -15,4 +15,6 @@ require "./pegasus/parser.cr"
 require "./pegasus/ast.cr"
 
 module Pegasus
+  alias Number = Int32 | UInt64
+  alias ParseTree = Leaf(String) | Branch(String)
 end
