@@ -2,18 +2,17 @@ module Pegasus
   class Context
     getter :pos
 
-    def initialize(@source : String, @pos = 0)
+    def initialize(@source : ::String, @pos = Pegasus::Position.new)
     end
 
     def consume(string : ::String)
-      pos = @pos
-      pos += string.size if string
+      pos = @pos.advance(string)
       Context.new(@source, pos)
     end
 
     def rest
-      return "" if @pos >= @source.size
-      @source[@pos..-1]
+      return "" if @pos.byte_position >= @source.size
+      @source[@pos.byte_position..-1]
     end
 
     private def reset_pos(pos)

@@ -1,3 +1,4 @@
+require "./pegasus/position.cr"
 require "./pegasus/context.cr"
 require "./pegasus/match_result.cr"
 require "./pegasus/repeatable.cr"
