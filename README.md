@@ -84,11 +84,6 @@ res = parser.parse("0-1 + 2 /4 * 51 ")
 res.success? #=> true
 ```
 
-
-## Development
-
-TODO: Write development instructions here
-
 ## Contributing
 
 1. Fork it ( https://github.com/pawandubey/pegasus/fork )
