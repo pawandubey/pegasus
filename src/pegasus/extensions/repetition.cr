@@ -6,7 +6,8 @@ module Pegasus
       end
 
       def match?(context : Context)
-        return {MatchResult.failure(Leaf.new(@label, "")), context} if @min > @max
+        error = Pegasus::ParseError.new("Max repetitions should be greater than min repetitions for #{@label}.", context.pos)
+        return {MatchResult.failure(Leaf.new(@label, ""), error), context} if @min > @max
 
         occ = 0
         accum = Branch(String).new(@label)
@@ -14,7 +15,7 @@ module Pegasus
         while occ < @max
           match, context = @rule.match?(context)
           if match.failure?
-            return {MatchResult.failure(accum), context} if occ < @min
+            return {MatchResult.failure(accum, match.error.not_nil!), context} if occ < @min
             return {MatchResult.success(accum), context}
           end
 

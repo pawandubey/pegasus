@@ -11,6 +11,8 @@ describe Pegasus::Atoms::Regexp do
     regexp = Pegasus::Atoms::Regexp.new(/dont/)
     result, _ = regexp.match?(Pegasus::Context.new("match_me"))
     result.success?.should be_false
+    result.error.should be_truthy
+    result.error.to_s.should match(/Expected \/dont\/ to match match_me at/)
   end
 
   it "should be equal to another Regexp with the same matcher" do

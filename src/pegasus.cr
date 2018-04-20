@@ -1,5 +1,6 @@
 require "./pegasus/position.cr"
 require "./pegasus/context.cr"
+require "./pegasus/parse_error.cr"
 require "./pegasus/match_result.cr"
 require "./pegasus/repeatable.cr"
 require "./pegasus/ignorable.cr"

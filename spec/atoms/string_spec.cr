@@ -11,6 +11,7 @@ describe Pegasus::Atoms::String do
     string = Pegasus::Atoms::String.new("match_me")
     result, _ = string.match?(Pegasus::Context.new("dont_match_me"))
     result.success?.should be_false
+    result.error.should be_truthy
   end
 
   it "should be equal to another String with the same matcher" do
@@ -39,6 +40,7 @@ describe Pegasus::Atoms::String do
     result, _ = string.match?(Pegasus::Context.new("aa"))
     result.success?.should be_false
     result.parse_tree.value.should eq("aa")
+    result.error.to_s.should match(/Expected a to match  at line/)
   end
 
   it "matches indefinitely if not supplied with a limit" do

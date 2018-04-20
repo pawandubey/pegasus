@@ -1,8 +1,8 @@
 module Pegasus
   class MatchResult
-    getter :parse_tree
+    getter :parse_tree, :error
 
-    def initialize(@result : Bool, @parse_tree : Pegasus::ParseTree)
+    def initialize(@result : Bool, @parse_tree : Pegasus::ParseTree, @error : Pegasus::ParseError? = nil)
       @parse_tree = parse_tree.prune
     end
 
@@ -10,8 +10,8 @@ module Pegasus
       MatchResult.new(true, tree)
     end
 
-    def self.failure(tree : Pegasus::ParseTree)
-      MatchResult.new(false, tree)
+    def self.failure(tree : Pegasus::ParseTree, error : Pegasus::ParseError)
+      MatchResult.new(false, tree, error)
     end
 
     def success?

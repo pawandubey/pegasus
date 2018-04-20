@@ -9,7 +9,7 @@ module Pegasus
       if match.success?
         {MatchResult.success(Leaf(String).new(@label, match.parse_tree.value)), context}
       else
-        {MatchResult.failure(Leaf(String).new(@label, match.parse_tree.value)), context}
+        {MatchResult.failure(Leaf(String).new(@label, match.parse_tree.value), match.error.not_nil!), context}
       end
     end
 

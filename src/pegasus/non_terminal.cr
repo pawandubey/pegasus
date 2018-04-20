@@ -21,7 +21,9 @@ module Pegasus
         match, context = matched_node.match?(context)
         {MatchResult.success(match.parse_tree), context}
       else
-        {MatchResult.failure(Branch(String).new(@label)), context}
+        error = @children.last.match?(context)[0].error.not_nil!
+
+        {MatchResult.failure(Branch(String).new(@label), error), context}
       end
     end
 

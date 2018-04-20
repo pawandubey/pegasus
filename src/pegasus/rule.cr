@@ -16,7 +16,7 @@ module Pegasus
     end
 
     def match?(context : Context) : {MatchResult, Context}
-      {MatchResult.failure(Leaf.new(:rule, "")), Context.new("")}
+      {MatchResult.failure(Leaf.new(:rule, ""), Pegasus::ParseError.new("", Pegasus::Position.new)), Context.new("")}
     end
   end
 end

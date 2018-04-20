@@ -12,7 +12,7 @@ module Pegasus
         if match.success?
           {MatchResult.success(Leaf.new(@label, match.parse_tree.value)), context}
         else
-          {MatchResult.failure(Leaf.new(@label, match.parse_tree.value)), old_context}
+          {MatchResult.failure(Leaf.new(@label, match.parse_tree.value), match.error.not_nil!), old_context}
         end
       end
 

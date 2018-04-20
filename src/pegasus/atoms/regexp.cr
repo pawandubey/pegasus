@@ -15,7 +15,8 @@ module Pegasus
           {MatchResult.success(node), context.consume(match_data)}
         else
           node = Pegasus::Leaf(::String).new(@label, "")
-          {MatchResult.failure(node), context}
+          error = Pegasus::ParseError.with_details(@regex.inspect, context.rest, context.pos)
+          {MatchResult.failure(node, error), context}
         end
       end
 
