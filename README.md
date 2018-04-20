@@ -82,6 +82,7 @@ end
 res = parser.parse("0-1 + 2 /4 * 51 ")
 
 res.success? #=> true
+res.error #=> nil ; this will give you more context on a parse failure.
 ```
 
 ## Contributing
